@@ -5,6 +5,8 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+  schedule:
+    - cron: "*/5 * * * *"
 
 jobs:
   docker:
@@ -114,6 +116,16 @@ jobs:
           from: Leif Eggenfellner
           secure: true
           body: workflow for ${{github.repository}} completed successfully!
+    
+  update-readme:
+    needs: [build, test, lint, deploy, docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Readme with Metrics
+        uses: anmol098/waka-readme-stats@master
+        with:
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
       # Step 2: Add deploy to Github pages here! Hot tip - The solution is in the Readme
