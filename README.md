@@ -1,4 +1,8 @@
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
+
 [![AccentureWorkshop](https://github.com/leifeggenfellner/leifeggenfellner.github.io/actions/workflows/build-pipeline.yml/badge.svg)](https://github.com/leifeggenfellner/leifeggenfellner.github.io/actions/workflows/build-pipeline.yml)
+
 
 # Github Actions workshop step-by-step guide
 
