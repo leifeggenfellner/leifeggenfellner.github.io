@@ -42,7 +42,7 @@ const Header: React.FC<{ tp: number }> = props => {
             <TitleAndLogo>
                 {/* This is where you can change the page title */}
                 {/* --------- EDIT LINE BELOW ----------------- */}
-                <H1 data-testid="h1-title">This is the wrong title🤨</H1>
+                <H1 data-testid="h1-title">Github Actions Workshop</H1>
                 {/* ------------------------------------------- */}
                 <Img src={AcnLogo} />
             </TitleAndLogo>
