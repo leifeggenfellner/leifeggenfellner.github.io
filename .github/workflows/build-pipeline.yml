@@ -32,9 +32,10 @@ jobs:
       - name: Test code
         run: npm run test
       - name: Print test status
-        run: echo "Testing is $STATUS"
+        run: echo "Testing is $STATUS $PASSWORD"
         env:
           STATUS: finished
+          PASSWORD: ${{secret.PASSWORD}}
   lint:
     runs-on: ubuntu-latest
     steps:
