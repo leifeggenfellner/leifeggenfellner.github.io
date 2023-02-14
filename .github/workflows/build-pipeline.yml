@@ -5,13 +5,14 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
 
 jobs:
   docker:
     runs-on: ubuntu-latest
-    needs: [build, test, lint]
+    needs: [build, test, lint, security]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -44,7 +45,7 @@ jobs:
           node-version: '16.18.1'
       - name: Install dependencies
         run: npm ci
-      # Step 3 - Add tests and linting here
+        
   test:
     runs-on: ubuntu-latest
     needs: build
@@ -87,8 +88,6 @@ jobs:
         uses: lirantal/is-website-vulnerable@main
         with:
           scan-url: "https://leifeggenfellner.github.io/"
-    
-
 
   deploy:
     needs: [build, test, lint, security]
@@ -129,7 +128,7 @@ jobs:
           body: workflow for ${{github.repository}} completed successfully!
     
   update-readme:
-    needs: [build, test, lint, deploy, docker, security]
+    needs: [build, test, lint, deploy, docker, security, docker]
     runs-on: ubuntu-latest
     steps:
       - name: Update Readme with Metrics
@@ -137,10 +136,4 @@ jobs:
         with:
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          SHOW_COMMIT: true
-          SHOW_DAYS_OF_WEEK: true
-          SHOW_LANGUAGE: true
-          SHOW_OS: true
-
-
-      # Step 2: Add deploy to Github pages here! Hot tip - The solution is in the Readme
+          REPOSITORY: leifeggenfellner/leifeggenfellner.github.io
