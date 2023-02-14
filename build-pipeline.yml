@@ -79,8 +79,19 @@ jobs:
       - name: Run styles lint and format check
         run: npm run lint:css
 
-  deploy:
+  security:
     needs: [build, test, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test for public javascript library vulnerabilities 
+        uses: lirantal/is-website-vulnerable@main
+        with:
+          scan-url: "https://leifeggenfellner.github.io/"
+    
+
+
+  deploy:
+    needs: [build, test, lint, security]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -99,7 +110,7 @@ jobs:
           folder: dist
 
   mail:
-    needs: [build, test, lint, deploy, docker, update-readme]
+    needs: [build, test, lint, deploy, docker, update-readme, security]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -118,7 +129,7 @@ jobs:
           body: workflow for ${{github.repository}} completed successfully!
     
   update-readme:
-    needs: [build, test, lint, deploy, docker]
+    needs: [build, test, lint, deploy, docker, security]
     runs-on: ubuntu-latest
     steps:
       - name: Update Readme with Metrics
