@@ -1,4 +1,4 @@
-[![AccentureWorkshop](https://github.com/leifeggenfellner/leifeggenfellner.github.io/actions/workflows/build-pipeline.yml/badge.svg?branch=gh-pages)](https://github.com/leifeggenfellner/leifeggenfellner.github.io/actions/workflows/build-pipeline.yml)
+[![AccentureWorkshop](https://github.com/leifeggenfellner/leifeggenfellner.github.io/actions/workflows/build-pipeline.yml/badge.svg)](https://github.com/leifeggenfellner/leifeggenfellner.github.io/actions/workflows/build-pipeline.yml)
 
 # Github Actions workshop step-by-step guide
 
