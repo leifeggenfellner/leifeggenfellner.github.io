@@ -96,4 +96,24 @@ jobs:
           branch: gh-pages
           folder: dist
 
+  mail:
+    needs: [build, test, lint, deploy, docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3.7.1
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.GMAIL_USERNAME}}
+          password: ${{secrets.GMAIL_PASSWORD}}
+          subject: Message from github actions.
+          to: eggenfellner@protonmail.com
+          from: Leif Eggenfellner
+          secure: true
+          body: workflow for ${{github.repository}} completed successfully!
+
+
       # Step 2: Add deploy to Github pages here! Hot tip - The solution is in the Readme
