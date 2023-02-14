@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,8 +19,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
       # Step 3 - Add tests and linting here
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.18.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.18.1'
+      - name: Install dependencies
+        run: npm ci
+      - name: Test code
+        run: npm run test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.18.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.18.1'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run TypeScript lint and format check
+        run: npm run lint:ts
+      - name: Run styles lint and format check
+        run: npm run lint:css
+
   deploy:
-    needs: build
+    needs: [build, test, lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
