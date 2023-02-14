@@ -35,7 +35,7 @@ jobs:
         run: echo "Testing is $STATUS $PASSWORD"
         env:
           STATUS: finished
-          PASSWORD: ${{secret.PASSWORD}}
+          PASSWORD: ${{secrets.PASSWORD}}
   lint:
     runs-on: ubuntu-latest
     steps:
